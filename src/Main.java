@@ -2,48 +2,49 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Main {
     static StringBuilder log = new StringBuilder();
     static int count = 0;
 
     public static void main(String[] args) {
-        newDir("D:/javaHomeworksTemp/Games", "src");
-        newDir("D:/javaHomeworksTemp/Games", "res");
-        newDir("D:/javaHomeworksTemp/Games", "savegames");
-        newDir("D:/javaHomeworksTemp/Games", "temp");
 
-        newDir("D:/javaHomeworksTemp/Games/src", "main");
-        newDir("D:/javaHomeworksTemp/Games/src", "test");
+        List<String> newDirectories = List.of("D:/javaHomeworksTemp/Games/src", "D:/javaHomeworksTemp/Games/res",
+                "D:/javaHomeworksTemp/Games/savegames", "D:/javaHomeworksTemp/Games/temp",
+                "D:/javaHomeworksTemp/Games/src/main", "D:/javaHomeworksTemp/Games/src/test",
+                "D:/javaHomeworksTemp/Games/res/drawables", "D:/javaHomeworksTemp/Games/res/vectors",
+                "D:/javaHomeworksTemp/Games/res/icons");
 
-        newFile("D:/javaHomeworksTemp/Games/src/main", "Main.java");
-        newFile("D:/javaHomeworksTemp/Games/src/main", "Utils.java");
+        createDirectory(newDirectories);
 
-        newDir("D:/javaHomeworksTemp/Games/res", "drawables");
-        newDir("D:/javaHomeworksTemp/Games/res", "vectors");
-        newDir("D:/javaHomeworksTemp/Games/res", "icons");
-
-        newFile("D:/javaHomeworksTemp/Games/temp", "temp.txt");
+        createFile("D:/javaHomeworksTemp/Games/src/main", "Main.java");
+        createFile("D:/javaHomeworksTemp/Games/src/main", "Utils.java");
+        createFile("D:/javaHomeworksTemp/Games/temp", "temp.txt");
 
         printLog(log);
 
 
     }
 
-    public static void newDir(String nameDirPath, String nameDir) {
-        File newDir = new File(nameDirPath, nameDir);
-        if (newDir.mkdir()) {
-            System.out.println("Папка успешно создана");
-            log("В пути " + nameDirPath + " создана папка " + nameDir + " в " + LocalDateTime.now());
-            count++;
-        } else {
-            System.out.println("Что-то пошло не так");
-            log("Ошибка! Не удалось создать в пути " + nameDirPath + " папку " + nameDir +
-                    " . Ошибка возникла в " + LocalDateTime.now());
+    public static void createDirectory(List<String> newDirectories) {
+        for (int i = 0; i < newDirectories.size(); i++) {
+            //  String directory = newDirectories.get(i);
+            File file = new File(newDirectories.get(i));
+            if (file.mkdir()) {
+                System.out.println("Папка успешно создана");
+                log("В пути " + newDirectories.get(i) + " папка успешно создана. Время создания: "
+                        + LocalDateTime.now());
+                count++;
+            } else {
+                System.out.println("Что-то пошло не так");
+                log("Ошибка! Не удалось создать в пути " + newDirectories.get(i) + "папку. Ошибка возникла в " +
+                        LocalDateTime.now());
+            }
         }
     }
 
-    public static void newFile(String nameDirPath, String nameFile) {
+    public static void createFile(String nameDirPath, String nameFile) {
         File newFile = new File(nameDirPath, nameFile);
         try {
             if (newFile.createNewFile())
@@ -66,7 +67,8 @@ public class Main {
 
         String logAll = String.valueOf(log);
         try (FileWriter writer = new FileWriter("D:/javaHomeworksTemp/Games/temp/temp.txt", true)) {
-            writer.write(logAll);
+            writer.write(logAll + count + " файлов было создано успешно");
+            //writer.write(count + " файлов было создано успешно");
             writer.flush();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
