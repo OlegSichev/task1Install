@@ -29,21 +29,19 @@ public class Main {
 
     }
 
-    public static void createDirectory(String newDirectories) {
-        //for (int i = 0; i < newDirectories.size(); i++) {
-            //  String directory = newDirectories.get(i);
-            File file = new File(newDirectories);
-            if (file.mkdir()) {
-                System.out.println("Папка успешно создана");
-                log("В пути " + newDirectories + " папка успешно создана. Время создания: "
-                        + LocalDateTime.now());
-                count++;
-            } else {
-                System.out.println("Что-то пошло не так");
-                log("Ошибка! Не удалось создать в пути " + newDirectories + "папку. Ошибка возникла в " +
-                        LocalDateTime.now());
-            }
+    public static void createDirectory(String newDirectory) {
+        File file = new File(newDirectory);
+        if (file.mkdir()) {
+            System.out.println("Папка успешно создана");
+            log("В пути " + newDirectory + " папка успешно создана. Время создания: "
+                    + LocalDateTime.now());
+            count++;
+        } else {
+            System.out.println("Что-то пошло не так");
+            log("Ошибка! Не удалось создать в пути " + newDirectory + "папку. Ошибка возникла в " +
+                    LocalDateTime.now());
         }
+    }
 
     public static void createFile(String nameDirPath, String nameFile) {
         File newFile = new File(nameDirPath, nameFile);
@@ -69,7 +67,6 @@ public class Main {
         String logAll = String.valueOf(log);
         try (FileWriter writer = new FileWriter("D:/javaHomeworksTemp/Games/temp/temp.txt", true)) {
             writer.write(logAll + count + " файлов было создано успешно");
-            //writer.write(count + " файлов было создано успешно");
             writer.flush();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
