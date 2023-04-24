@@ -16,7 +16,9 @@ public class Main {
                 "D:/javaHomeworksTemp/Games/res/drawables", "D:/javaHomeworksTemp/Games/res/vectors",
                 "D:/javaHomeworksTemp/Games/res/icons");
 
-        createDirectory(newDirectories);
+        for (String temp : newDirectories) {
+            createDirectory(temp);
+        }
 
         createFile("D:/javaHomeworksTemp/Games/src/main", "Main.java");
         createFile("D:/javaHomeworksTemp/Games/src/main", "Utils.java");
@@ -27,22 +29,21 @@ public class Main {
 
     }
 
-    public static void createDirectory(List<String> newDirectories) {
-        for (int i = 0; i < newDirectories.size(); i++) {
+    public static void createDirectory(String newDirectories) {
+        //for (int i = 0; i < newDirectories.size(); i++) {
             //  String directory = newDirectories.get(i);
-            File file = new File(newDirectories.get(i));
+            File file = new File(newDirectories);
             if (file.mkdir()) {
                 System.out.println("Папка успешно создана");
-                log("В пути " + newDirectories.get(i) + " папка успешно создана. Время создания: "
+                log("В пути " + newDirectories + " папка успешно создана. Время создания: "
                         + LocalDateTime.now());
                 count++;
             } else {
                 System.out.println("Что-то пошло не так");
-                log("Ошибка! Не удалось создать в пути " + newDirectories.get(i) + "папку. Ошибка возникла в " +
+                log("Ошибка! Не удалось создать в пути " + newDirectories + "папку. Ошибка возникла в " +
                         LocalDateTime.now());
             }
         }
-    }
 
     public static void createFile(String nameDirPath, String nameFile) {
         File newFile = new File(nameDirPath, nameFile);
